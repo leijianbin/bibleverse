@@ -2,27 +2,40 @@
 
 <%= link_to 'Edit', edit_image_path(@image) %> |
 <%= link_to 'Back', images_path %>
+<div class="container">
+	<div class="row">
+		<ol class="breadcrumb">
+		  <li><a href="/">Home</a></li>
+		  <li><a href="#"><%= @image.categories.map {|cate| cate.name} .join(', ') %></a></li>
+		  <li class="active"><%= @image.name %></li>
+		</ol>
+	</div>
+	<div class="row">
+		<h1><%= @image.name %></h1>
+		<div class="col-md-4">By <%= @image.created_at %></div>
 
-<h1><%= @image.name %></h1>
-
-Submit by<span> <%= @image.user.id %> </span> 
-<br>
-
-Created by<span> <%= @image.author %> </span>
-<br>
-
-Category: <span> 
-	<%= @image.categories.map {|cate| cate.name} .join(', ') %>
-</span>
-
-Description: <p><%= @image.desc %></p>
-
-<% @image.imagefiles.each do |imagefile|%>
-<p><%= imagefile.size %></p>
-<img src="<%= imagefile.image_file_path %>">
-
-<% end %>
-
-<p>Relative verse: <%= @image.verse %></p>
-
+		<% @image.imagefiles.each do |imagefile|%>
+		<%if @image.imagefiles.first %>
+			<img class="img-responsive img-center" src="<%= imagefile.image_file_path %>">
+		<% end %>	
+		<% end %>
+	</div>
+	<div class="row">
+		<div class="col-md-1"><strong>Author:</strong></div>
+		<div class="col-md-4"> <%= @image.author %> </div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"><strong>Description:</strong></div>
+		<div class="col-md-4"> <%= @image.desc %> </div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"><strong>Download:</strong></div>
+		<div class="col-md-4"> 
+			<% @image.imagefiles.each do |imagefile|%>
+			<p><%= imagefile.size %></p>
+			<% end %>
+		</div>
+	</div>
+</div>
+	<!-- <p>Relative verse: <%= @image.verse %></p> -->
 
